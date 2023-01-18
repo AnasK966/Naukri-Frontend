@@ -15,7 +15,7 @@ const Search = () => {
     setSearchLocation(e.target.value);
   };
   const handleClick = () => {
-    navigate('/search?s=' + searchTitle);
+    navigate('/emp/search?s=' + searchTitle);
   };
 
   return (

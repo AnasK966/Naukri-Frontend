@@ -29,7 +29,7 @@ const JobShortDetail = ({
         </div>
         <div>
           <button className='cross-button'>
-            <img src='./assets/cross.png' alt='' height={40} width={40} />
+            <img src='/assets/cross.png' alt='' height={40} width={40} />
           </button>
         </div>
       </JobSubDiv>

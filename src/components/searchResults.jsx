@@ -12,25 +12,26 @@ const SearchResults = () => {
   useEffect(() => {
     let responseObject = { resObj: [], data: [] };
     async function getJobs() {
-      const res = await fetch('http://localhost:3000/jobs?q=' + query1);
+      const res = await fetch('http://localhost:3000/emp/search?q=' + query1);
       if (!res.ok) {
         throw new Error(`HTTP Error ${res.status} not found`);
       }
       const resData = await res.json();
       const data = await resData;
-      if (data.length === 0) {
+      responseObject.resObj = data.data;
+      if (responseObject.resObj.length === 0) {
         responseObject.data = [];
         setJobs(responseObject);
       } else {
-        responseObject.resObj = data;
-        setJobs(responseObject);
+        setJobs(responseObject.resObj);
       }
     }
     getJobs();
   }, [query1]);
+  console.log(jobs)
 
   const renderJobs = () => {
-    return jobs.resObj.map((j) => {
+    return jobs.map((j) => {
       return (
         <JobShortDetail
           key={j._id}
@@ -50,7 +51,7 @@ const SearchResults = () => {
   };
 
   const renderJobBody = () => {
-    if (jobs.resObj.length > 0) {
+    if (jobs.length > 0) {
       return (
         <JobBody>
           <JobBodySubDiv id='job-div'>{renderJobs()}</JobBodySubDiv>
@@ -59,7 +60,7 @@ const SearchResults = () => {
     } else {
       return (
         <ErrorDiv>
-          <img src='./assets/error.png' height={70} width={70}></img>
+          <img src='/assets/error.png' height={70} width={70}></img>
           <h3>No results matched for search...</h3>
         </ErrorDiv>
       );

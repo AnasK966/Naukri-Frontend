@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Home />} />
-          <Route path='jobs' element={<Jobs />} />
+          <Route path='cmp/dashboard' element={<Jobs />} />
           <Route path='jobDetails/:jobId' element={<JobDetail />} />
           <Route path='jobapply/:jobId' element={<JobApplication />} />
           <Route path='submitted' element={<Submitted />} />
@@ -27,7 +27,7 @@ function App() {
           <Route path='postJob' element={<PostJob />} />
           <Route path='signUp' element={<SignUp />} />
           <Route path='logIn' element={<Login />} />
-          <Route path='search' element={<SearchResults />} />
+          <Route path='emp/search' element={<SearchResults />} />
         </Route>
       </Routes>
     </BrowserRouter>

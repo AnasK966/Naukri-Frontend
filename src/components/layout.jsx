@@ -74,7 +74,7 @@ function Layout() {
             </HeaderSubDivLink>
           </HeaderSubDiv>
           <HeaderSubDiv className='header-sub-div'>
-            <HeaderSubDivLink href='' onClick={() => navigate('/jobs')}>
+            <HeaderSubDivLink href=''>
               Find Jobs
             </HeaderSubDivLink>
           </HeaderSubDiv>

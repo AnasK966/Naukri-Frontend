@@ -10,19 +10,21 @@ const Jobs = () => {
 
   useEffect(() => {
     async function getJobs() {
-      const res = await fetch('http://localhost:3000/jobs');
+      const res = await fetch('http://localhost:3000/cmp/dashboard');
+      console.log(res)
       if (!res.ok) {
         throw new Error(`HTTP Error ${res.status} not found`);
       }
       const resData = await res.json();
       const data = await resData;
+      console.log(data)
       setJobs(data);
     }
     getJobs();
   }, []);
 
   const renderJobs = () => {
-    return jobs.map((j) => {
+    return jobs.jobs.map((j) => {
       return (
         <JobShortDetail
           key={j._id}

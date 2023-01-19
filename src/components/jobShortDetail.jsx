@@ -16,21 +16,17 @@ const JobShortDetail = ({
 }) => {
   return (
     <JobDiv>
+
       <JobSubDiv>
         <div>
           {' '}
           <p id='job-new'>new</p>
-          <Link id='job-card-title-link' to={`/jobDetails/${id}`}>
+          <Link id='job-card-title-link' to={`/emp/jobDetail/${id}`}>
             {' '}
             <h3>{title}</h3>
           </Link>
           <p>yoiunus</p>
           <p>karachi</p>
-        </div>
-        <div>
-          <button className='cross-button'>
-            <img src='/assets/cross.png' alt='' height={40} width={40} />
-          </button>
         </div>
       </JobSubDiv>
       <JobProperty>

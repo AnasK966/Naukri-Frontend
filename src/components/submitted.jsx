@@ -1,21 +1,46 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Submitted = () => {
   const navigate = useNavigate();
+  const { id } = useParams()
+  const {emp_id} = useParams()
+
+  useEffect(() => {
+    async function applyJob() {
+      console.log(emp_id)
+      console.log(id)
+      const res = await fetch('http://localhost:3000/emp/apply/' + emp_id + id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(res)
+      if (!res.ok) {
+        throw new Error(`HTTP Error ${res.status} not found`);
+      }
+      const resData = await res.json();
+      const data = await resData;
+      console.log(data);
+      setJob(data.job);
+    }
+    applyJob();
+  }, [])
+
   return (
     <Main>
       <SubmittedDiv>
         <div>
-          <img src='./assets/submitted.png' height={200} width={200}></img>
+          <img src='/assets/submitted.png' height={200} width={200}></img>
         </div>
         <div>
           <h2>Your application has been submitted!</h2>
         </div>
         <Confirm>
           <div>
-            <img src='./assets/tick.png' height={20} width={20}></img>
+            <img src='/assets/tick.png' height={20} width={20}></img>
           </div>
           <div id='confirm'>
             You will get an email confirmation at <b>saadnadeem885@gmail.com</b>
@@ -24,14 +49,14 @@ const Submitted = () => {
         </Confirm>
         <Confirm>
           <div>
-            <img src='./assets/tick.png' height={20} width={20}></img>
+            <img src='/assets/tick.png' height={20} width={20}></img>
           </div>
           <div id='confirm'>Your resume has been saved to your profile.</div>
         </Confirm>
         <BackButtonDiv>
           <div>
             <Img
-              src='./assets/back arrow.png'
+              src='/assets/back arrow.png'
               onClick={() => navigate('/')}
             ></Img>
           </div>

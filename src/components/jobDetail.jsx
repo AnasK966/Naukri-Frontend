@@ -1,85 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const JobDetail = () => {
   const [job, setJob] = useState();
   const [jobInfo, setJobInfo] = useState({ jobId: '' });
   const navigate = useNavigate();
-  const { jobId } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     async function getJobDetail() {
-      const res = await fetch('http://localhost:3000/jobs?_id=' + jobId);
+      const res = await fetch('http://localhost:3000/emp/jobDetail/' + id);
       if (!res.ok) {
         throw new Error(`HTTP Error ${res.status} not found`);
       }
       const resData = await res.json();
       const data = await resData;
       console.log(data);
-      setJob(data);
+      setJob(data.job);
     }
     getJobDetail();
   }, []);
-
-  // const operation () => {
-  //   navigate('/jobapply')
-  //   return job.map((j) => {
-  //     console.log(j)
-  //     setJob(j._id)
-  //   })
-  // }
+  const emp_id = localStorage.getItem('user')
+  // console.log(storage)
 
   const renderJobDetail = () => {
-    return job.map((j) => {
-      return (
-        <JobDetailDiv>
-          <JobAttributes>
-            <div>
-              <h3>{j.title}</h3>
-            </div>
-            <div>
+    return (
+      <JobDetailDiv>
+        <JobAttributes>
+          <div>
+            <h3>{job.title}</h3>
+          </div>
+          {/* <div>
+            {' '}
+            <p className='font-colror'>{j.cmpname}</p>
+            <p>{j.cmplocation}</p>
+          </div> */}
+          <div>
+            <Link to={`/emp/apply/${emp_id}/${id}`}>
+              <ApplyButton>Apply Now</ApplyButton>
+            </Link>
+          </div>
+        </JobAttributes>
+        <br />
+        <JobDetails>
+          <div>
+            <h3>Job Details</h3>
+          </div>
+          <div>
+            <b>
+              <p>Salary</p>
+            </b>
+            <p>
               {' '}
-              <p className='font-colror'>{j.cmpname}</p>
-              <p>{j.cmplocation}</p>
-            </div>
-            <div>
-              <Link to={`/jobapply/${jobId}`}>
-                <ApplyButton>Apply Now</ApplyButton>
-              </Link>
-            </div>
-          </JobAttributes>
-          <br />
-          <JobDetails>
-            <div>
-              <h3>Job Details</h3>
-            </div>
-            <div>
-              <b>
-                <p>Salary</p>
-              </b>
-              <p>
-                {' '}
-                {j.salRange.minSal} - {j.salRange.maxSal} Rs
-              </p>
-            </div>
-            <div>
-              <b>
-                <p>Job Type</p>
-              </b>
-              <p>{j.jobType}</p>
-            </div>
-          </JobDetails>
-          <br />
-          <FullJobDesc>
-            <h3>Full Job Description</h3>
-            <FullJobDescSubDiv>
-              <div id='job-desc'>{j.jobDesc}</div>
-            </FullJobDescSubDiv>
-          </FullJobDesc>
-        </JobDetailDiv>
-      );
-    });
+              {job.salRange.minSal} - {job.salRange.maxSal} Rs
+            </p>
+          </div>
+          <div>
+            <b>
+              <p>Job Type</p>
+            </b>
+            <p>{job.jobtype}</p>
+          </div>
+        </JobDetails>
+        <br />
+        <FullJobDesc>
+          <h3>Full Job Description</h3>
+          <FullJobDescSubDiv>
+            <div id='job-desc'>{job.jobDesc}</div>
+          </FullJobDescSubDiv>
+        </FullJobDesc>
+      </JobDetailDiv>
+    );
   };
 
   return (

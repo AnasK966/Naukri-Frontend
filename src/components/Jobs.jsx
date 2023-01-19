@@ -11,17 +11,16 @@ const Jobs = () => {
   useEffect(() => {
     async function getJobs() {
       const res = await fetch('http://localhost:3000/cmp/dashboard');
-      console.log(res)
       if (!res.ok) {
         throw new Error(`HTTP Error ${res.status} not found`);
       }
       const resData = await res.json();
       const data = await resData;
-      console.log(data)
       setJobs(data);
     }
     getJobs();
   }, []);
+  console.log(jobs)
 
   const renderJobs = () => {
     return jobs.jobs.map((j) => {
@@ -30,10 +29,7 @@ const Jobs = () => {
           key={j._id}
           id={j._id}
           title={j.title}
-          // cmpname={j.cmpname}
-          // cmplocation={j.cmplocation}
-          // postdate={j.postdate}
-          jobType={j.jobType}
+          jobType={j.jobtype}
           jobDesc={j.jobDesc}
           // skillReq={j.skillReq}
           maxSal={j.salRange.maxSal}
@@ -100,101 +96,6 @@ const BodySubDiv = styled.div`
     left: 17%;
   }
 `;
-
-// const InputDiv = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: center;
-//   margin-top: 100px;
-//   padding: 5px;
-//   width: 100%;
-
-//   @media (max-width: 400px) {
-//     flex-direction: column;
-//     margin-top: 0px;
-//   }
-
-//   @media (min-width: 400px) and (max-width: 600px) {
-//     flex-direction: column;
-//     margin-top: 0px;
-//   }
-//   @media (min-width: 600px) and (max-width: 900px) {
-//     flex-direction: column;
-//     text-align: center;
-//     margin-top: 10px;
-//   }
-
-//   @media (min-width: 900px) {
-//     margin-top: 50px;
-//   }
-// `;
-
-// const InputField = styled.input`
-//   margin-left: 10px;
-//   margin-right: 10px;
-//   height: 26px;
-//   width: 300px;
-//   border-radius: 8px;
-//   padding: 4px 20px 5px;
-//   font-size: 15px;
-
-//   @media (max-width: 400px) {
-//     width: 150px;
-//     margin-top: 10px;
-//   }
-
-//   @media (min-width: 400px) and (max-width: 600px) {
-//     width: 250px;
-//     margin-top: 10px;
-//   }
-
-//   @media (min-width: 600px) and (max-width: 900px) {
-//     margin-top: 10px;
-//     width: 340px;
-//   }
-//   @media (min-width: 900px) and (max-width: 1100px) {
-//     width: 200px;
-//   }
-//   &:focus {
-//     outline: none;
-//     border: 1px solid rgb(71, 71, 242);
-//     transition: 800ms;
-//     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-//   }
-// `;
-
-// const FindButton = styled.button`
-//   border: 1px solid black;
-//   color: white;
-//   background-color: blue;
-//   padding: 7px 12px 8px;
-//   width: 100px;
-//   border-radius: 10px;
-//   border-color: blue;
-//   font-size: 15px;
-//   &: hover {
-//     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-//     transition: 500ms;
-//     cursor: pointer;
-//   }
-
-//   @media (max-width: 400px) {
-//     width: 200px;
-//     margin-top: 10px;
-//     margin-left: 10px;
-//   }
-
-//   @media (min-width: 400px) and (max-width: 600px) {
-//     width: 290px;
-//     margin-top: 10px;
-//     margin-left: 10px;
-//   }
-
-//   @media (min-width: 600px) and (max-width: 900px) {
-//     margin-top: 10px;
-//     width: 380px;
-//   }
-// `;
 
 const OptionDiv = styled.div`
   text-align: center;

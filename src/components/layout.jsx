@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './layout.css';
@@ -6,6 +6,12 @@ import './layout.css';
 function Layout() {
   const [userStatus, setUserStatus] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setUserStatus(true)
+    }
+  }, []);
 
   function NotSignedIn() {
     return (
@@ -27,7 +33,7 @@ function Layout() {
           <HeaderSubDivLink
             id='login-signup'
             href=''
-            onClick={() => navigate('/logIn')}
+            onClick={() => navigate('emp/signin')}
           >
             Log In
           </HeaderSubDivLink>
@@ -46,7 +52,7 @@ function Layout() {
       <HeaderSubCont2>
         <HeaderSubDiv className='header-sub-div'>
           <HeaderSubDivLink className='header-sub-div'>
-            <ProfileImg src='./assets/account.png'></ProfileImg>
+            <ProfileImg src='/assets/account.png'></ProfileImg>
           </HeaderSubDivLink>
         </HeaderSubDiv>
         <HeaderSubDiv className='header-sub-div'>
@@ -74,7 +80,7 @@ function Layout() {
             </HeaderSubDivLink>
           </HeaderSubDiv>
           <HeaderSubDiv className='header-sub-div'>
-            <HeaderSubDivLink href=''>
+            <HeaderSubDivLink href='' onClick={() => navigate('/cmp/dashboard')}>
               Find Jobs
             </HeaderSubDivLink>
           </HeaderSubDiv>

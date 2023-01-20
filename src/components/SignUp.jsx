@@ -105,9 +105,10 @@ const SignUp = () => {
     const data = await res.json()
 
     if (!data) {
-      console.log('message not send')
+      alert('Fuck you')
     } else {
-      alert('Message send')
+      alert('Signed Up')
+      navigate('/jobAttributes')
     }
   }
 
@@ -128,9 +129,10 @@ const SignUp = () => {
     const data = await res.json()
 
     if (!data) {
-      console.log('message not send')
+      console.log('Invalid Details')
     } else {
-      alert('Message send')
+      alert('Signed Up')
+      navigate('/')
     }
   }
 

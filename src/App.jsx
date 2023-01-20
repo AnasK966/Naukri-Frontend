@@ -12,6 +12,7 @@ import Login from './components/Login.jsx';
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import SearchResults from './components/searchResults.jsx';
+import JobAttributes from './components/attributes.jsx';
 
 function App() {
   return (
@@ -22,12 +23,13 @@ function App() {
           <Route path='cmp/dashboard' element={<Jobs />} />
           <Route path='emp/jobDetail/:id' element={<JobDetail />} />
           <Route path='jobapply/:jobId' element={<JobApplication />} />
-          <Route path='emp/apply/:id/:id' element={<Submitted />} />
+          <Route path='emp/apply/' element={<Submitted />} />
           <Route path='postCV' element={<PostCV />} />
           <Route path='postJob' element={<PostJob />} />
           <Route path='signUp' element={<SignUp />} />
           <Route path='emp/signin' element={<Login />} />
           <Route path='emp/search' element={<SearchResults />} />
+          <Route path='jobAttributes' element={<JobAttributes />} />
         </Route>
       </Routes>
     </BrowserRouter>

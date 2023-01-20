@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Submitted = () => {
   const navigate = useNavigate();
-  const { id } = useParams()
-  const {emp_id} = useParams()
+  const [ searchParams ] = useSearchParams()
+  // const {emp_id} = useParams()
+  const emp_id = searchParams.get('emp_id')
+  const job_id = searchParams.get('job_id')
+  console.log(emp_id)
+  console.log(job_id)
 
   useEffect(() => {
     async function applyJob() {
-      console.log(emp_id)
-      console.log(id)
-      const res = await fetch('http://localhost:3000/emp/apply/' + emp_id + id, {
-        method: 'PUT',
+      // console.log(emp_id)
+      // console.log(id)
+      const res = await fetch(`http://localhost:3000/emp/apply?emp_id=${emp_id}&job_id=${job_id}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         }
@@ -24,7 +28,7 @@ const Submitted = () => {
       const resData = await res.json();
       const data = await resData;
       console.log(data);
-      setJob(data.job);
+      // setJob(data.job);
     }
     applyJob();
   }, [])

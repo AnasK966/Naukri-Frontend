@@ -10,7 +10,7 @@ const JobDetail = () => {
 
   useEffect(() => {
     async function getJobDetail() {
-      const res = await fetch('http://localhost:3000/emp/jobDetail/' + id);
+      const res = await fetch('http://localhost:3000/emp/jobDetail/' + id );
       if (!res.ok) {
         throw new Error(`HTTP Error ${res.status} not found`);
       }
@@ -37,7 +37,7 @@ const JobDetail = () => {
             <p>{j.cmplocation}</p>
           </div> */}
           <div>
-            <Link to={`/emp/apply/${emp_id}/${id}`}>
+            <Link to={`/emp/apply?emp_id=${emp_id}&job_id=${id}`}>
               <ApplyButton>Apply Now</ApplyButton>
             </Link>
           </div>

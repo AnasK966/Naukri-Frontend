@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const PostJob = () => {
   const [JobAttributes, setJobAttributes] = useState({
-    title: '',
-    advertise: '',
-    jobType: '',
-    no_of_candidates: '',
-    min: '',
-    max: '',
-    rate: '',
-    jobDesc: '',
+    title: "",
+    jobtype: "",
+    qualReq: "",
+    skillReq: [],
+    expReq: "",
+    no_of_candidates: "",
+    minSal: "",
+    maxSal: "",
+    jobDesc: "",
   });
+
+  const [select, setSelect] = useState()
+  JobAttributes.expReq = select
+  console.log(JobAttributes.skillReq)
+
+  const createdBy = localStorage.getItem('user')
 
   let name, value;
   const handleChange = (e) => {
@@ -20,6 +27,28 @@ const PostJob = () => {
 
     setJobAttributes({ ...JobAttributes, [name]: value });
   };
+
+  // let skillName, skillValue
+  // const handleSkillReq = () => {
+  //   skillName = e.target.name
+  // }
+
+  const handleJobForm = async(e) => {
+    e.preventDefault()
+    const { title, jobtype, qualReq, skillReq, expReq, no_of_candidates, minSal, maxSal, jobDesc } = JobAttributes
+    
+    const res = await fetch('http://localhost:3000/cmp/addPosts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title, jobtype, qualReq, skillReq, expReq, no_of_candidates, salRange: { minSal, maxSal }, jobDesc, createdBy
+      })
+    })
+    console.log(res)
+  }
+
   return (
     <Main>
       <JobDiv>
@@ -28,35 +57,13 @@ const PostJob = () => {
             <h1>Provide basic information</h1>
           </div>
           <div>
-            <p>
-              <b>Country:</b> Pakistan
-            </p>
-            <p>
-              <b>Language:</b> English
-            </p>
-            <p>
-              <b>Company Name:</b> Younus Textile
-            </p>
-          </div>
-          <div>
             <Label>
               <b>Job Title</b>
             </Label>
             <Input
-              type='text'
-              name='title'
+              type="text"
+              name="title"
               value={JobAttributes.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <Label>
-              <b>Where would you like to advertise this job?</b>
-            </Label>
-            <Input
-              type='text'
-              name='advertise'
-              value={JobAttributes.advertise}
               onChange={handleChange}
             />
           </div>
@@ -70,19 +77,62 @@ const PostJob = () => {
               <b>What is the job type?</b>
             </Label>
             <Input
-              type='text'
-              name='jobType'
-              value={JobAttributes.jobType}
+              type="text"
+              name="jobtype"
+              value={JobAttributes.jobtype}
               onChange={handleChange}
             />
+          </div>
+          <div>
+            <Label>
+              <b>Qualification Requirement</b>
+            </Label>
+            <Input
+              type="text"
+              name="qualReq"
+              value={JobAttributes.qualReq}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <Label>
+              <b>Skill Requirement</b>
+            </Label>
+            <Input
+              type="text"
+              name="skillReq"
+              value={JobAttributes.skillReq}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <Label>
+              <b>Experience Requirement</b>
+            </Label>
+            <Select value={select} onChange={(e)=> setSelect(e.target.value)}>
+              {/* type=""
+              name="expReq"
+              value={JobAttributes.expReq}
+              onChange={handleChange} */}
+              <option value='1'>1 year</option>
+              <option value='2'>2 year</option>
+              <option value='3'>3 year</option>
+              <option value='4'>4 year</option>
+              <option value='5'>5 year</option>
+              <option value='6'>6 year</option>
+              <option value='7'>7 year</option>
+              <option value='8'>8 year</option>
+              <option value='9'>9 year</option>
+              <option value='10'>10 year</option>
+              </Select>
           </div>
           <div>
             <Label>
               <b>How many people you want to hire for this opening?</b>
             </Label>
             <Input
-              type='number'
-              name='no_of_candidates'
+              type="number"
+              name="no_of_candidates"
               value={JobAttributes.no_of_candidates}
               onChange={handleChange}
             />
@@ -101,63 +151,45 @@ const PostJob = () => {
                 <b>Minimum</b>
               </Label>
               <Input
-                type='number'
-                name='min'
-                placeholder='PKR'
-                value={JobAttributes.min}
+                type="number"
+                name="minSal"
+                placeholder="PKR"
+                value={JobAttributes.minSal}
                 onChange={handleChange}
               />
             </div>
-            <div id='range'>to</div>
+            <div id="range">to</div>
             <div>
               <Label>
                 <b>Maximum</b>
               </Label>
               <Input
-                type='number'
-                name='max'
-                placeholder='PKR'
-                value={JobAttributes.max}
+                type="number"
+                name="maxSal"
+                placeholder="PKR"
+                value={JobAttributes.maxSal}
                 onChange={handleChange}
               />
             </div>
-            <div>
-              <Label>
-                <b>Rate</b>
-              </Label>
-              <Select
-                name='rate'
-                value={JobAttributes.rate}
-                onChange={handleChange}
-              >
-                <option>Per month</option>
-                <option>Per year</option>
-              </Select>
-            </div>
           </CompenstaionSubDiv>
         </Compensation>
-        <div>
+        <DescDiv>
           <Label>
             <b>Job Description</b>
           </Label>
-          <Form action='/'>
-            <LabelResume for='upload'>
-              <UploadImg src='./assets/upload.png'></UploadImg>
-              <b>Upload a PDF or DOCX</b>
-            </LabelResume>
-            <input
-              name='jobDesc'
-              id='upload'
-              type='file'
-              hidden
+          <Form action="/">
+          <TextArea
+              name="jobDesc"
               value={JobAttributes.jobDesc}
               onChange={handleChange}
-            />
-            <SubmitButton onClick={() => navigate('/home')}>
-              Submit
-            </SubmitButton>
+            >
+              {" "}
+            </TextArea>
+            <SubmitButton onClick={handleJobForm}>
+                Submit
+              </SubmitButton>
           </Form>
-        </div>
+        </DescDiv>
       </JobDiv>
     </Main>
   );
@@ -174,17 +206,17 @@ const Main = styled.div`
 const JobDiv = styled.div`
   padding: 20px;
   display: grid;
-  grid-template-rows: 300px 250px 200px;
+  grid-template-rows: 180px 450px 200px;
   margin-top: 30px;
   width: 80%;
-  height: 1000px;
+  height: 1300px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 8px;
   margin-bottom: 20px;
 `;
 const BasicInfo = styled.form`
   display: grid;
-  grid-template-rows: 80px repeat(3, 70px);
+  grid-template-rows: 80px 70px;
 `;
 
 const Label = styled.label`
@@ -209,7 +241,7 @@ const Input = styled.input`
 
 const Details = styled.form`
   display: grid;
-  grid-template-rows: 80px repeat(2, 70px);
+  grid-template-rows: 80px repeat(5, 70px);
 `;
 
 const Compensation = styled.div`
@@ -219,40 +251,14 @@ const Compensation = styled.div`
 
 const CompenstaionSubDiv = styled.form`
   display: grid;
-  grid-template-columns: 250px 25px 250px 200px;
-`;
-
-const Select = styled.select`
-  height: 30px;
-  border-radius: 7px;
-  &:focus {
-    outline: none;
-    border: 1px solid rgb(71, 71, 242);
-    transition: 800ms;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
+  grid-template-columns: 200px 200px 200px;
 `;
 
 const Form = styled.form`
   display: grid;
-  grid-template-rows: 60px 40px;
+  grid-template-rows: 320px 40px;
   row-gap: 30px;
-`;
-
-const LabelResume = styled.label`
-  color: blue;
-  border: 1px solid grey;
-  padding: 0.5rem;
-  font-family: sans-serif;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  width: 60%;
-`;
-
-const UploadImg = styled.img`
-  margin-right: 20px;
-  height: 25px;
+  padding: 5px;
 `;
 
 const SubmitButton = styled.button`
@@ -269,3 +275,24 @@ const SubmitButton = styled.button`
     transition: 300ms;
   }
 `;
+
+const DescDiv = styled.div`
+  display: grid;
+  grid-template-rows: 30px 300px;
+  padding: 5px;
+`;
+
+const TextArea = styled.textarea`
+  height: 300px;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 15px;
+`;
+
+const Select = styled.select`
+  width: 300px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+
+`

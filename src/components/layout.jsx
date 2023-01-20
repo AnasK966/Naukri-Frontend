@@ -1,45 +1,48 @@
-import { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import './layout.css';
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import "./layout.css";
 
 function Layout() {
   const [userStatus, setUserStatus] = useState(false);
+  const [role, setRole] = useState()
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      setUserStatus(true)
+    if (localStorage.getItem("token")) {
+      setUserStatus(true);
     }
+    const role = localStorage.getItem("role");
+    setRole(role)
   }, []);
 
   function NotSignedIn() {
     return (
       <HeaderSubCont2>
-        <HeaderSubDiv className='header-sub-div'>
-          <HeaderSubDivLink href='' onClick={() => navigate('/postCV')}>
+        <HeaderSubDiv className="header-sub-div">
+          <HeaderSubDivLink href="" onClick={() => navigate("/postCV")}>
             Submit your CV
           </HeaderSubDivLink>
         </HeaderSubDiv>
-        <HeaderSubDiv className='header-sub-div'>
+        <HeaderSubDiv className="header-sub-div">
           <HeaderSubDivLink
-            id='login-signup'
-            href=''
-            onClick={() => navigate('/signUp')}
+            id="login-signup"
+            href=""
+            onClick={() => navigate("/signUp")}
           >
             Sign In
           </HeaderSubDivLink>
           <div>/</div>
           <HeaderSubDivLink
-            id='login-signup'
-            href=''
-            onClick={() => navigate('emp/signin')}
+            id="login-signup"
+            href=""
+            onClick={() => navigate("emp/signin")}
           >
             Log In
           </HeaderSubDivLink>
         </HeaderSubDiv>
-        <HeaderSubDiv className='header-sub-div'>
-          <HeaderSubDivLink href='' onClick={() => navigate('/postJob')}>
+        <HeaderSubDiv className="header-sub-div">
+          <HeaderSubDivLink href="" onClick={() => navigate("/postJob")}>
             Employer/Post Job
           </HeaderSubDivLink>
         </HeaderSubDiv>
@@ -48,20 +51,37 @@ function Layout() {
   }
 
   function SignedIn() {
-    return (
-      <HeaderSubCont2>
-        <HeaderSubDiv className='header-sub-div'>
-          <HeaderSubDivLink className='header-sub-div'>
-            <ProfileImg src='/assets/account.png'></ProfileImg>
-          </HeaderSubDivLink>
-        </HeaderSubDiv>
-        <HeaderSubDiv className='header-sub-div'>
-          <HeaderSubDivLink href='' onClick={() => navigate('/postCV')}>
-            Submit your CV
-          </HeaderSubDivLink>
-        </HeaderSubDiv>
-      </HeaderSubCont2>
-    );
+    if (role === "emp") {
+      return (
+        <HeaderSubCont2>
+          <HeaderSubDiv className="header-sub-div">
+            <HeaderSubDivLink className="header-sub-div">
+              <ProfileImg src="/assets/account.png"></ProfileImg>
+            </HeaderSubDivLink>
+          </HeaderSubDiv>
+          <HeaderSubDiv className="header-sub-div">
+            <HeaderSubDivLink href="" onClick={() => navigate("/postCV")}>
+              Submit your CV
+            </HeaderSubDivLink>
+          </HeaderSubDiv>
+        </HeaderSubCont2>
+      );
+    } else {
+      return (
+        <HeaderSubCont2>
+          <HeaderSubDiv className="header-sub-div">
+            <HeaderSubDivLink className="header-sub-div">
+              <ProfileImg src="/assets/account.png"></ProfileImg>
+            </HeaderSubDivLink>
+          </HeaderSubDiv>
+          <HeaderSubDiv className="header-sub-div">
+            <HeaderSubDivLink href="" onClick={() => navigate("/postJob")}>
+              Employer/Post Job
+            </HeaderSubDivLink>
+          </HeaderSubDiv>
+        </HeaderSubCont2>
+      );
+    }
   }
 
   return (
@@ -71,21 +91,24 @@ function Layout() {
           <LogoCont>
             <LogoName>Naukri</LogoName>
             <span>
-              <img src='' alt=''></img>
+              <img src="" alt=""></img>
             </span>
           </LogoCont>
-          <HeaderSubDiv className='header-sub-div'>
-            <HeaderSubDivLink onClick={() => navigate('/')} href=''>
+          <HeaderSubDiv className="header-sub-div">
+            <HeaderSubDivLink onClick={() => navigate("/")} href="">
               Home
             </HeaderSubDivLink>
           </HeaderSubDiv>
-          <HeaderSubDiv className='header-sub-div'>
-            <HeaderSubDivLink href='' onClick={() => navigate('/cmp/dashboard')}>
+          <HeaderSubDiv className="header-sub-div">
+            <HeaderSubDivLink
+              href=""
+              onClick={() => navigate("/cmp/dashboard")}
+            >
               Find Jobs
             </HeaderSubDivLink>
           </HeaderSubDiv>
-          <HeaderSubDiv className='header-sub-div'>
-            <HeaderSubDivLink href=''>Company Reviews</HeaderSubDivLink>
+          <HeaderSubDiv className="header-sub-div">
+            <HeaderSubDivLink href="">Company Reviews</HeaderSubDivLink>
           </HeaderSubDiv>
         </HeaderSubCont1>
         {userStatus ? SignedIn() : NotSignedIn()}
@@ -97,21 +120,21 @@ function Layout() {
         <div>
           <FooterItem>
             <FooterItemSubDiv>
-              {' '}
-              <FooterImg src='/assets/browse.png'></FooterImg>
+              {" "}
+              <FooterImg src="/assets/browse.png"></FooterImg>
             </FooterItemSubDiv>
             <FooterItemSubDiv>
-              {' '}
-              <FooterLink href=''>Browse Jobs</FooterLink>
+              {" "}
+              <FooterLink href="">Browse Jobs</FooterLink>
             </FooterItemSubDiv>
           </FooterItem>
           <FooterItem>
             <FooterItemSubDiv>
-              {' '}
-              <FooterImg src='/assets/browse.png'></FooterImg>
+              {" "}
+              <FooterImg src="/assets/browse.png"></FooterImg>
             </FooterItemSubDiv>
             <FooterItemSubDiv>
-              {' '}
+              {" "}
               <FooterLink>Browse Companies</FooterLink>
             </FooterItemSubDiv>
           </FooterItem>
@@ -119,22 +142,22 @@ function Layout() {
         <div>
           <FooterItem>
             <FooterItemSubDiv>
-              {' '}
-              <FooterImg src='/assets/about.png'></FooterImg>
+              {" "}
+              <FooterImg src="/assets/about.png"></FooterImg>
             </FooterItemSubDiv>
             <FooterItemSubDiv>
-              {' '}
-              <FooterLink href=''>About</FooterLink>
+              {" "}
+              <FooterLink href="">About</FooterLink>
             </FooterItemSubDiv>
           </FooterItem>
           <FooterItem>
             <FooterItemSubDiv>
-              {' '}
-              <FooterImg src='/assets/contact.png'></FooterImg>
+              {" "}
+              <FooterImg src="/assets/contact.png"></FooterImg>
             </FooterItemSubDiv>
             <FooterItemSubDiv>
-              {' '}
-              <FooterLink href=''>Contact</FooterLink>
+              {" "}
+              <FooterLink href="">Contact</FooterLink>
             </FooterItemSubDiv>
           </FooterItem>
         </div>

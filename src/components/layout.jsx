@@ -20,9 +20,6 @@ function Layout() {
     setUserStatus(userStatus)
   }, []);
 
-  // localStorage.setItem('role', 'emp');
-  // localStorage.setItem('emp_id', '123456789');
-  // localStorage.setItem('cmp_id', '987654321');
 
   function handleOption() {
     setOptionStatus(!optionsStatus);
@@ -31,17 +28,18 @@ function Layout() {
   function navigateProfile() {
     const role = localStorage.getItem('role');
     const emp_id = localStorage.getItem('user');
-    // const cmp_id = localStorage.getItem('cmp_id');
+    const cmp_id = localStorage.getItem('user');
+    console.log(cmp_id)
     if (role === 'emp') {
-      navigate(`/empProfile/${emp_id}`);
+      navigate(`/empDashboard/${emp_id}`);
     } else {
-      navigate('/cmpProfile?cmp_id=' + cmp_id);
+      navigate('/cmpDashboard?s=' + cmp_id);
     }
   }
 
   function logOut() {
-    localStorage.removeItem('token')
     localStorage.removeItem('role')
+    localStorage.removeItem('token')
     localStorage.removeItem('user')
     localStorage.setItem('userStatus','false')
   }
@@ -49,20 +47,20 @@ function Layout() {
   function NotSignedIn() {
     return (
       <HeaderSubCont2>
-        <HeaderSubDiv className='header-sub-div'>
+        {/* <HeaderSubDiv className='header-sub-div'>
           <HeaderSubDivLink href='' onClick={() => navigate('/postCV')}>
             Submit your CV
           </HeaderSubDivLink>
-        </HeaderSubDiv>
+        </HeaderSubDiv> */}
         <HeaderSubDiv className='header-sub-div'>
           <HeaderSubDivLink
             id='login-signup'
             href=''
             onClick={() => navigate('/signUp')}
           >
-            Sign In
+            Sign Up
           </HeaderSubDivLink>
-          <div>/</div>
+          <div> / </div>
           <HeaderSubDivLink
             id='login-signup'
             href=''
@@ -73,7 +71,7 @@ function Layout() {
         </HeaderSubDiv>
         <HeaderSubDiv className='header-sub-div'>
           <HeaderSubDivLink href='' onClick={() => navigate('/postJob')}>
-            Employer/Post Job
+            Employer / Post Job
           </HeaderSubDivLink>
         </HeaderSubDiv>
       </HeaderSubCont2>
@@ -100,16 +98,16 @@ function Layout() {
               ></ArrowImg>
             </AccountArrowDiv>
           </HeaderSubDiv>
-          <OptionDiv disabled={optionsStatus}>
+          <EmpOptionDiv disabled={optionsStatus}>
             <Option>
               <li>
-                <LiAnchor>Profile</LiAnchor>
+                <LiAnchor onClick={() => navigate('/jobAttributes')}>Profile</LiAnchor>
               </li>
               <li>
                 <LiAnchor onClick={() => logOut()}>Log Out</LiAnchor>
               </li>
             </Option>
-          </OptionDiv>
+          </EmpOptionDiv>
         </div>
           <HeaderSubDiv className='header-sub-div'>
             <HeaderSubDivLink href='' onClick={() => navigate('/postCV')}>
@@ -137,16 +135,13 @@ function Layout() {
               ></ArrowImg>
             </AccountArrowDiv>
           </HeaderSubDiv>
-          <OptionDiv disabled={optionsStatus}>
+          <CmpOptionDiv disabled={optionsStatus}>
             <Option>
               <li>
-                <LiAnchor>Profile</LiAnchor>
-              </li>
-              <li>
-                <LiAnchor>Log Out</LiAnchor>
+                <LiAnchor onClick={()=> logOut()}>Log Out</LiAnchor>
               </li>
             </Option>
-          </OptionDiv>
+          </CmpOptionDiv>
         </div>
           <HeaderSubDiv className='header-sub-div'>
             <HeaderSubDivLink href='' onClick={() => navigate('/postJob')}>
@@ -219,9 +214,6 @@ function Layout() {
             >
               Find Jobs
             </HeaderSubDivLink>
-          </HeaderSubDiv>
-          <HeaderSubDiv className='header-sub-div'>
-            <HeaderSubDivLink href=''>Company Reviews</HeaderSubDivLink>
           </HeaderSubDiv>
         </HeaderSubCont1>
         {userStatus ==='true' ? SignedIn() : NotSignedIn()}
@@ -354,7 +346,22 @@ const ArrowImg = styled.img`
   cursor: pointer;
 `;
 
-const OptionDiv = styled.div`
+const CmpOptionDiv = styled.div`
+  display: ${(props) => (props.disabled ? '' : 'none')};
+  border: 1px solid black;
+  height: 40px;
+  border: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #f0eded;
+  position: absolute;
+  top: 12%;
+  left: 83%;
+  z-index: 5;
+  // transition-delay: 1500ms;
+`;
+
+const EmpOptionDiv = styled.div`
   display: ${(props) => (props.disabled ? '' : 'none')};
   border: 1px solid black;
   height: 80px;
@@ -363,9 +370,10 @@ const OptionDiv = styled.div`
   border-bottom-right-radius: 10px;
   background-color: #f0eded;
   position: absolute;
-  top: 8.45%;
-  left: 88.7%;
+  top: 12%;
+  left: 83%;
   z-index: 5;
+  // transition-delay: 1500ms;
 `;
 
 const Option = styled.ul`

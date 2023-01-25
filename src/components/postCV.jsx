@@ -4,14 +4,39 @@ import styled from 'styled-components';
 
 const PostCV = () => {
   const navigate = useNavigate();
-  const [cv, setCV] = useState({ file: '' });
+  const [cv, setCV] = useState({ resume: '' });
   let name, value;
   const handleChange = (e) => {
+
     name = e.target.name;
     value = e.target.value;
+    // const resume = URL.createObjectURL(e.target.files[0])
+    // console.log(resume)
 
     setCV({ cv, [name]: value });
   };
+  // console.log(cv.resume)
+
+  // const resume = URL.createObjectURL(e.target.files[0])
+
+  const handleResumeSubmit = async (e) => {
+    e.preventDefault()
+    console.log('Hit')
+    const { resume } = cv
+    const candidate_id = localStorage.getItem('user')
+    console.log(resume)
+    const res = await fetch('http://localhost:3000/emp/uploadResume', {
+      method: 'POST',
+      // headers: {
+      //   'Content-Type': 'undefined'
+      // },
+      body: ({
+        candidate_id,
+        resume
+      })
+    })
+    console.log(res)
+  }
   return (
     <Main>
       <PostDiv>
@@ -24,14 +49,14 @@ const PostCV = () => {
             <b>Upload your Resume</b>
           </LabelResume>
           <ResumeField
-            name='file'
+            name='resume'
             id='upload'
             type='file'
             hidden
-            value={cv.file}
+            value={cv.resume}
             onChange={handleChange}
           />
-          <SubmitButton onClick={() => navigate('/jobs')}>Submit</SubmitButton>
+          <SubmitButton onClick={handleResumeSubmit}>Submit</SubmitButton>
         </Form>
       </PostDiv>
     </Main>

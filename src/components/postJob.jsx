@@ -50,7 +50,6 @@ const PostJob = () => {
     console.log(res)
   }
 
-  let skills
   const handleSkills = () => {
     const skillReq = JobAttributes.skillReq.split(',')
     JobAttributes.skillReq = skillReq
@@ -216,11 +215,13 @@ const JobDiv = styled.div`
   display: grid;
   grid-template-rows: 180px 450px 200px;
   margin-top: 30px;
-  width: 80%;
+  width: 60%;
   height: 1300px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 8px;
   margin-bottom: 20px;
+  margin-left: 20%;
+  margin-right: 20%;
 `;
 const BasicInfo = styled.form`
   display: grid;
@@ -238,6 +239,7 @@ const Input = styled.input`
   padding: 3px;
   outline: none;
   border: none;
+
   border-bottom: 1px solid grey;
   &:focus {
     outline: none;

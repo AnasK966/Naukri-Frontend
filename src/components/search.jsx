@@ -27,13 +27,13 @@ const Search = () => {
           onChange={handleTitleChange}
         />
       </div>
-      <div>
+      {/* <div>
         <InputField
           type='text'
           placeholder='City,province or region'
           onChange={handleLocationChange}
         />
-      </div>
+      </div> */}
       <div>
         <FindButton onClick={handleClick}>
           <b>Find Jobs</b>
@@ -79,7 +79,7 @@ const InputField = styled.input`
   margin-left: 10px;
   margin-right: 10px;
   height: 26px;
-  width: 300px;
+  width: 350px;
   border: 1px grey solid;
   border-radius: 8px;
   padding: 4px 20px 5px;
@@ -100,7 +100,7 @@ const InputField = styled.input`
     width: 340px;
   }
   @media (min-width: 900px) and (max-width: 1100px) {
-    width: 200px;
+    width: 300px;
   }
   &:focus {
     outline: none;

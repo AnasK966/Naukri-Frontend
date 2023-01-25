@@ -2,35 +2,66 @@ import { React, useState } from "react";
 import styled from "styled-components";
 
 const JobAttributes = () => {
-  const [userEmployer, setEmployer] = useState({
+  const [userEmployee, setEmployee] = useState({
     education: "",
-    skills: [],
-    work_exp: {},
-    certificates: [],
+    skills: "",
+    work_exp: "",
+    certificates: "",
   });
 
-  const handleEmployerSubmit = () => {
-    console.log(".");
-  };
-  const handleEmployerChange = () => {
+  const handleEmployeeSubmit = () => {
     console.log(".");
   };
 
-  const employerErrors = {
-    fname: userEmployer.firstName.length === 0,
-    lname: userEmployer.lastName.length === 0,
-    email: userEmployer.email.length === 0,
-    password: userEmployer.hash_password.length === 0,
-    phone: userEmployer.ph_no.length === 0,
-    country: userEmployer.country.length === 0,
-    city: userEmployer.city.length === 0,
+  let name, value;
+  const handleEmployeeChange = (e) => {
+    name = e.target.name;
+    value = e.target.value;
+    setEmployee({...userEmployee, [name]: value})
+  };
+
+  const handleAttributesSubmit = async (e) => {
+    e.preventDefault()
+    handleSkills()
+    handleCertificates()
+    const emp_id = localStorage.getItem('user')
+    const { education, skills, certificates } = userEmployee;
+    const res = await fetch('http://localhost:3000/emp/addProfile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        education, skills, certificates, candidate_id:emp_id
+      })
+    })
+    console.log(res)
+  }
+
+  const handleSkills = () => {
+    const skills = userEmployee.skills.split(',')
+    userEmployee.skills = skills
+    console.log(userEmployee.skills)
+  }
+
+  const handleCertificates = () => {
+    const certificates = userEmployee.certificates.split(',')
+    userEmployee.certificates = certificates
+    console.log(userEmployee.certificates)
+  }
+
+  const employeeErrors = {
+    education: userEmployee.education.length === 0,
+    skills: userEmployee.skills.length === 0,
+    work_exp: userEmployee.work_exp.length === 0,
+    certificates: userEmployee.certificates.length === 0,
   };
 
   return (
     <DetailsDiv>
-      <EmployerDetails onSubmit={handleEmployerSubmit}>
+      <EmployeeDetails onSubmit={handleEmployeeSubmit}>
         <div>
-          <h1>Provide Details...</h1>
+          <h1>Provide Academics</h1>
         </div>
         <div>
           <Label>
@@ -39,73 +70,37 @@ const JobAttributes = () => {
           <Input
             type="text"
             name="education"
-            value={userEmployer.education}
-            onChange={handleEmployerChange}
-            invalid={employerErrors["cmpname"]}
+            value={userEmployee.education}
+            onChange={handleEmployeeChange}
+            invalid={employeeErrors["cmpname"]}
           />
         </div>
         <div>
           <Label>
-            <b>Email</b>
-          </Label>
-          <Input
-            type="email"
-            name="email"
-            value={userEmployer.email}
-            onChange={handleEmployerChange}
-            invalid={employerErrors["email"]}
-          />
-        </div>
-        <div>
-          <Label>
-            <b>Password</b>
-          </Label>
-          <Input
-            type="password"
-            name="hash_password"
-            value={userEmployer.hash_password}
-            onChange={handleEmployerChange}
-            invalid={employerErrors["password"]}
-          />
-        </div>
-        <div>
-          <Label>
-            <b>Phone Number</b>
-          </Label>
-          <Input
-            type="number"
-            name="ph_no"
-            value={userEmployer.ph_no}
-            onChange={handleEmployerChange}
-            invalid={employerErrors["phone"]}
-          />
-        </div>
-        <div>
-          <Label>
-            <b>Country</b>
+            <b>Skills</b>
           </Label>
           <Input
             type="text"
-            name="country"
-            value={userEmployer.country}
-            onChange={handleEmployerChange}
-            invalid={employerErrors["country"]}
+            name="skills"
+            value={userEmployee.skills}
+            onChange={handleEmployeeChange}
+            invalid={employeeErrors["skills"]}
           />
         </div>
         <div>
           <Label>
-            <b>City</b>
+            <b>Certificates</b>
           </Label>
           <Input
             type="text"
-            name="city"
-            value={userEmployer.city}
-            onChange={handleEmployerChange}
-            invalid={employerErrors["city"]}
+            name="certificates"
+            value={userEmployee.certificates}
+            onChange={handleEmployeeChange}
+            invalid={employeeErrors["certificates"]}
           />
         </div>
-        <SubmitButton>Submit</SubmitButton>
-      </EmployerDetails>
+        <SubmitButton onClick={handleAttributesSubmit}>Submit</SubmitButton>
+      </EmployeeDetails>
     </DetailsDiv>
   );
 };
@@ -118,9 +113,9 @@ const DetailsDiv = styled.div`
   justify-content: center;
 `;
 
-const EmployerDetails = styled.form`
+const EmployeeDetails = styled.form`
   display: grid;
-  grid-template-rows: repeat(8, 70px) 50px;
+  grid-template-rows: repeat(3, 70px) 70px;
   width: 45%;
   margin-top: 40px;
   margin-bottom: 40px;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import JobShortDetail from './jobShortDetail';
-import { getJobs } from '../fetcher';
 import Search from './search';
 const Jobs = () => {
   const navigate = useNavigate();
@@ -16,6 +15,7 @@ const Jobs = () => {
       }
       const resData = await res.json();
       const data = await resData;
+      // console.log(data[0].updatedAt)
       setJobs(data);
     }
     getJobs();
@@ -34,6 +34,7 @@ const Jobs = () => {
           // skillReq={j.skillReq}
           maxSal={j.salRange.maxSal}
           minSal={j.salRange.minSal}
+          postDate={j.updatedAt}
         />
       );
     });
@@ -115,7 +116,7 @@ const JobHeadingDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #f0eded;
+  // background-color: #f0eded;
   border-bottom: 1px solid grey;
 `;
 

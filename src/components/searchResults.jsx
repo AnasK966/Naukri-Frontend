@@ -40,11 +40,12 @@ const SearchResults = () => {
           // cmpname={j.cmpname}
           // cmplocation={j.cmplocation}
           // postdate={j.postdate}
-          jobType={j.jobType}
+          jobType={j.jobtype}
           jobDesc={j.jobDesc}
           // skillReq={j.skillReq}
           maxSal={j.salRange.maxSal}
           minSal={j.salRange.minSal}
+          postDate={j.updatedAt}
         />
       );
     });

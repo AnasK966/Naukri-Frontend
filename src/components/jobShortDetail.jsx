@@ -1,46 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const JobShortDetail = ({
   id,
   title,
-  // cmpname,
-  // cmplocation,
-  // postdate,
   jobType,
   jobDesc,
-  // skillReq,
   maxSal,
   minSal,
+  postDate,
 }) => {
+  
+  const splitPostDate = () => {
+    const date = postDate.split('T')
+    return date[0]
+  }
+  splitPostDate()
   return (
     <JobDiv>
-
       <JobSubDiv>
         <div>
-          {' '}
-          <p id='job-new'>new</p>
-          <Link id='job-card-title-link' to={`/emp/jobDetail/${id}`}>
-            {' '}
+          {" "}
+          <p id="job-new">new</p>
+          <Link id="job-card-title-link" to={`/emp/jobDetail/${id}`}>
+            {" "}
             <h3>{title}</h3>
           </Link>
-          <p>yoiunus</p>
-          <p>karachi</p>
         </div>
       </JobSubDiv>
       <JobProperty>
-        <div id='job-property'>{jobType}</div>
-        <div id='job-property'>
+        <div id="job-property">{jobType}</div>
+        <div id="job-property">
           {minSal} - {maxSal} Rs
         </div>
       </JobProperty>
       <ShortDesc>
         <ShortDescLi key={id}>
-          <b>Job Description : </b> {jobDesc}
+          <b>Job Description : </b>
+          <JobDesc> {jobDesc}</JobDesc>
         </ShortDescLi>
       </ShortDesc>
-      <JobDate>Post Date</JobDate>
+      <JobDate>Post Date : {  splitPostDate()}</JobDate>
     </JobDiv>
   );
 };
@@ -55,7 +56,7 @@ const JobDiv = styled.div`
   width: 90%;
   padding: 10px;
   border-radius: 20px;
-  height: 400px;
+  height: 250px;
   margin-bottom: 15px;
   @media (min-width: 900px) and (max-width: 1020px) {
     width: 350px;
@@ -103,5 +104,12 @@ const ShortDescLi = styled.li`
 `;
 
 const JobDate = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
 `;
+
+const JobDesc = styled.div`
+  height: 80px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -30px 36px -28px inset;
+  overflow-y: scroll;
+`

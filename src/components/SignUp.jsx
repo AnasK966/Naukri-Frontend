@@ -108,7 +108,7 @@ const SignUp = () => {
       alert('Fuck you')
     } else {
       alert('Signed Up')
-      navigate('/jobAttributes')
+      navigate('/emp/signin')
     }
   }
 
@@ -322,11 +322,21 @@ const SignUp = () => {
     <Main>
       <OptionDiv>
         <OptionSubDiv>
-          <Employee onClick={() => setUserStatus(true)}>
-            As an employee
+        <Employee>
+            <input
+              type="radio"
+              name="employee"
+              onChange={() => setUserStatus(true)}
+            />
+            <label id="profile-div">As an Employee</label>
           </Employee>
-          <Employer onClick={() => setUserStatus(false)}>
-            As an employer
+          <Employer>
+            <input
+              type="radio"
+              name="employee"
+              onChange={() => setUserStatus(false)}
+            />
+            <label id="profile-div">As an Employer</label>
           </Employer>
         </OptionSubDiv>
       </OptionDiv>
@@ -346,34 +356,24 @@ const OptionDiv = styled.div`
 `;
 
 const OptionSubDiv = styled.div`
-  display: grid;
-  grid-template-columns: 320px 320px;
-  column-gap: 100px;
+display: flex;
+justify-content: center;
+column-gap: 80px;
 `;
 
+
 const Employee = styled.div`
-  margin-top: 30px;
-  padding: 30px 80px 10px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  &:hover {
-    background-color: #e0dddd;
-    transition: 400ms;
-  }
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  margin-top: 10%;
 `;
+
 const Employer = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 30px 80px 30px;
-  margin-top: 30px;
   border-radius: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  &:hover {
-    background-color: #e0dddd;
-    transition: 400ms;
-  }
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  margin-top: 10%;
 `;
 
 const DetailsDiv = styled.div`

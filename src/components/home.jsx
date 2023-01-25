@@ -58,7 +58,7 @@ const BodyDiv = styled.div`
 const BodySubDiv = styled.div`
   position: absolute;
   top: 20%;
-  left: 20%;
+  left: 30%;
 
   @media (max-width: 400px) {
     top: 4%;

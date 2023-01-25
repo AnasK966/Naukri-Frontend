@@ -14,6 +14,8 @@ const Login = () => {
     setEmployee({ ...user, [name]: value });
   };
 
+  console.log(userStatus);
+
   const errors = {
     name: user.email.length === 0,
     password: user.hash_password.length === 0,
@@ -47,13 +49,16 @@ const Login = () => {
       }),
     });
     const data = await res.json();
-    console.log(data);
-    alert("Signed In");
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('user', data.user.emp_id)
-    localStorage.setItem('role', data.user.role)
-    localStorage.setItem('userStatus','true')
-    navigate("/");
+    if (data.message) {
+      alert(data.message);
+    } else {
+      alert("Signed In");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.user.emp_id);
+      localStorage.setItem("role", data.user.role);
+      localStorage.setItem("userStatus", "true");
+      navigate("/");
+    }
   };
 
   const submitEmployerLogin = async (e) => {
@@ -77,11 +82,11 @@ const Login = () => {
       alert(data.message);
     } else {
       alert("Signed In");
-      console.log(data)
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('user', data.user.cmp_id)
-      localStorage.setItem('role', data.user.role)
-      localStorage.setItem('userStatus','true')
+      console.log(data);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.user.cmp_id);
+      localStorage.setItem("role", data.user.role);
+      localStorage.setItem("userStatus", "true");
       navigate("/");
     }
   };
@@ -89,40 +94,46 @@ const Login = () => {
   const employee = () => {
     return (
       <MainSubDiv>
-              <EmployeeLoginDiv>
-        <div>
-          <h1>Enter Details</h1>
-        </div>
-        <div>
-          <Label>
-            <b>Email</b>
-          </Label>
-          <Input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <Label>
-            <b>Password</b>
-          </Label>
-          <Input
-            type="password"
-            name="hash_password"
-            value={user.hash_password}
-            onChange={handleChange}
-          />
-        </div>
-        <div id="login-div">
-          <p>
-            Dont have an account?{" "}
-            <SignUp onClick={() => navigate("/signUp")}>Sign Up</SignUp>
-          </p>
-          <SubmitButton onClick={submitEmployeeLogin}>Submit</SubmitButton>
-        </div>
-      </EmployeeLoginDiv>
+        <EmployeeLoginDiv>
+          <div>
+            <h1>Enter Details</h1>
+          </div>
+          <div>
+            <Label>
+              <b>Email</b>
+            </Label>
+            <InputDiv>
+              <img src="/assets/mail.png" height={20} width={20}></img>
+              <Input
+                type="email"
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+              />
+            </InputDiv>
+          </div>
+          <div>
+            <Label>
+              <b>Password</b>
+            </Label>
+            <InputDiv>
+              <img src="/assets/password.png" height={20} width={20}></img>
+              <Input
+                type="password"
+                name="hash_password"
+                value={user.hash_password}
+                onChange={handleChange}
+              />
+            </InputDiv>
+          </div>
+          <div id="login-div">
+            <p>
+              Dont have an account?{" "}
+              <SignUp onClick={() => navigate("/signUp")}>Sign Up</SignUp>
+            </p>
+            <SubmitButton onClick={submitEmployeeLogin}>Submit</SubmitButton>
+          </div>
+        </EmployeeLoginDiv>
       </MainSubDiv>
     );
   };
@@ -130,63 +141,71 @@ const Login = () => {
   const employer = () => {
     return (
       <MainSubDiv>
-              <EmployerLoginDiv>
-        <div>
-          <h1>Enter Details</h1>
-        </div>
-        <div>
-          <Label>
-            <b>Email</b>
-          </Label>
-          <Input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <Label>
-            <b>Password</b>
-          </Label>
-          <Input
-            type="password"
-            name="hash_password"
-            value={user.hash_password}
-            onChange={handleChange}
-          />
-        </div>
-        <div id="login-div">
-          <p>
-            Dont have an account?{" "}
-            <SignUp onClick={() => navigate("/signUp")}>Sign Up</SignUp>
-          </p>
-          <SubmitButton onClick={submitEmployerLogin}>Submit</SubmitButton>
-        </div>
-      </EmployerLoginDiv>
+        <EmployerLoginDiv>
+          <div>
+            <h1>Enter Details</h1>
+          </div>
+          <div>
+            <Label>
+              <b>Email</b>
+            </Label>
+            <InputDiv>
+              <img src="/assets/mail.png" height={20} width={20}></img>
+              <Input
+                type="email"
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+              />
+            </InputDiv>
+          </div>
+          <div>
+            <Label>
+              <b>Password</b>
+            </Label>
+            <InputDiv>
+              <img src="/assets/password.png" height={20} width={20}></img>
+              <Input
+                type="password"
+                name="hash_password"
+                value={user.hash_password}
+                onChange={handleChange}
+              />
+            </InputDiv>
+          </div>
+          <div id="login-div">
+            <p>
+              Dont have an account?{" "}
+              <SignUp onClick={() => navigate("/signUp")}>Sign Up</SignUp>
+            </p>
+            <SubmitButton onClick={submitEmployerLogin}>Submit</SubmitButton>
+          </div>
+        </EmployerLoginDiv>
       </MainSubDiv>
     );
   };
   return (
     <Main>
-            <OptionDiv>
+      <OptionDiv>
         <OptionSubDiv>
-          <Employee onClick={() => setUserStatus(true)}>
-            As an employee
+          <Employee>
+            <input
+              type="radio"
+              name="employee"
+              onChange={() => setUserStatus(true)}
+            />
+            <label id="profile-div">As an Employee</label>
           </Employee>
-          <Employer onClick={() => setUserStatus(false)}>
-            As an employer
+          <Employer>
+            <input
+              type="radio"
+              name="employee"
+              onChange={() => setUserStatus(false)}
+            />
+            <label id="profile-div">As an Employer</label>
           </Employer>
         </OptionSubDiv>
       </OptionDiv>
-      {/* <SubDiv>
-      <SwitchDiv>
-      <label class="switch">
-        <input type="checkbox" />
-        <span class="slider round"></span>
-      </label>
-      </SwitchDiv>
-      </SubDiv> */}
       {userStatus ? employee() : employer()}
     </Main>
   );
@@ -195,26 +214,11 @@ const Login = () => {
 export default Login;
 
 // STYLED CSS
-
-
-
-// const SwitchDiv = styled.div`
-//   border: 1px solid black;
-//   display: flex;
-//   justify-content: center;
-//   `
 const Main = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-
 `;
-
-// const SubDiv = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-// `
 
 const OptionDiv = styled.div`
   display: flex;
@@ -222,40 +226,31 @@ const OptionDiv = styled.div`
 `;
 
 const OptionSubDiv = styled.div`
-  display: grid;
-  grid-template-columns: 320px 320px;
-  column-gap: 100px;
+  display: flex;
+  justify-content: center;
+  column-gap: 80px;
 `;
 
+
 const Employee = styled.div`
-  margin-top: 30px;
-  padding: 30px 80px 10px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  &:hover {
-    background-color: #e0dddd;
-    transition: 400ms;
-  }
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  margin-top: 10%;
 `;
+
 const Employer = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 30px 80px 30px;
-  margin-top: 30px;
   border-radius: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  &:hover {
-    background-color: #e0dddd;
-    transition: 400ms;
-  }
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  margin-top: 10%;
 `;
+
 
 const MainSubDiv = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const EmployeeLoginDiv = styled.form`
   display: grid;
@@ -286,6 +281,7 @@ const Input = styled.input`
   height: 24px;
   font-size: 15px;
   padding: 3px;
+  margin-left: 10px;
   outline: none;
   border: none;
   border-bottom: 1px solid ${(props) => (props.invalid ? "red" : "grey")};
@@ -295,6 +291,10 @@ const Input = styled.input`
     border-bottom: 1px solid rgb(71, 71, 242);
     transition: 800ms;
   }
+`;
+
+const InputDiv = styled.div`
+  display: flex;
 `;
 
 const SignUp = styled.span`
